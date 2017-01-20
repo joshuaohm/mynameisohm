@@ -3,6 +3,7 @@ body, html{
   height: 100%;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 }
 
 .box{
@@ -155,28 +156,16 @@ body, html{
 
 */
 
-@media only screen and (max-width: 769px){
-
-  .side-menu{
-    width: calc(40% - 2px);
-  }
-
+@media only screen and (min-width: 481px) and (max-width: 768px){
 
   .slide-right{
     transform: translateX(40%);
   }
-
 }
 
-@media only screen and (max-width: 481px){
-
-  .side-menu{
-    width: calc(50% - 2px);
-  }
-
+@media only screen and (max-width: 480px){
 
   .slide-right{
     transform: translateX(50%);
   }
-
 }
