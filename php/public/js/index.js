@@ -19,8 +19,10 @@ function rotatePassions(ids){
 
 	//Move to the next one in the list if we randomly pick a repeat.
 	if(current === id){
-		current.split('-');
-		var num = parseInt(current[1]) + 1;
+
+		current = current.trim();
+		current = current.split('-');
+		var num = parseInt(current[1]);
 
 		if(num >= ids.length){
 			

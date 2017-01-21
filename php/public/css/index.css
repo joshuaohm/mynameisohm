@@ -14,7 +14,7 @@
 }
 
 .index-container .content .pnw{
-	color: #2b1d0e;
+	color: #3e2a14;
 	font-size: 2em;
 }
 
@@ -53,6 +53,10 @@
 
   .index-container .content{
     margin-bottom: 30px;
+  }
+
+  .index-container .content .pnw, .index-container .content .passion{
+    margin-top: 20px;
   }
   
   .index-container .content .pnw, .index-container .content .visible{
