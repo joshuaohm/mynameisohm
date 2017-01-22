@@ -1,7 +1,6 @@
 body, html{
   width: 100%;
   height: 100%;
-  overflow: hidden;
   position: relative;
 }
 
@@ -12,13 +11,13 @@ body, html{
 }
 
 .container{
-  height: 100%;
   width: 100%;
+  height:100%;
   position: absolute;
   top:0;
-  left:0;
+  left:0px;
   background-color: #436521;
-  transition: all .8s ease-in;
+  transition: all 0.7s;
   vertical-align:bottom;
 }
 
@@ -60,7 +59,7 @@ body, html{
   height: 8px;
   background-color: white;
   position: absolute;
-  transition: background-color .3s;
+  transition: all 0.3s;
 }
 
 .menu-button-container .top{
@@ -84,6 +83,7 @@ body, html{
   width: 100%;
   position: relative;
   display: block;
+  background-color: #436521;
 }
 
 .main-body .body-content{
@@ -93,9 +93,6 @@ body, html{
   padding-right: 50px;
   margin-top: 50px;
 }
-
-/* FOOTER */
-
 
 /* Animations & Layers */
 
@@ -138,6 +135,10 @@ body, html{
   background-color: #666666 !important;
 }
 
+.scroll-lock{
+  overflow: hidden;
+}
+
 /* COLORS */
 
 /* 
@@ -157,12 +158,20 @@ body, html{
 
 @media only screen and (min-width: 481px) and (max-width: 768px){
 
+  .container{
+    transition: all .4s;
+  }
+
   .slide-right{
     transform: translateX(40%);
   }
 }
 
 @media only screen and (max-width: 480px){
+
+  .container{
+    transition: all .4s;
+  }
 
   .slide-right{
     transform: translateX(50%);

@@ -2,12 +2,13 @@
 @section('content')
 {{ Html::script('js/index.js') }}
 {{ Html::style('css/index.css') }}
+<div class="background"></div>
 <div class="index-container">
 
 	<div class="content">
-		<h1> Hi, My name is Joshua Ohm </h1>
+		<div class="sentence block">Hi, My name is Joshua Ohm</div>
 
-		<h3> I am a developer from the <span class="pnw">Pacific Northwest</span> </h3>
+		<div class="sentence-small">I am a developer from the <span class="pnw">Pacific Northwest</span></div>
 	</div>
 	<div class="content large-margin-bottom">
 		<div class="sentence">I am passionate about</div>
@@ -24,7 +25,7 @@
 		@endforeach
 	</div>
 	<div class="content">
-		<h2> Hit <span class="yellow">that</span> hamburger on the top right to learn more about me and explore my work. </h2>
+		<div class="sentence-mid">Hit <span class="yellow">that</span> hamburger on the top right to learn more about me and explore my work. </div>
 	</div>
 </div>
 @stop

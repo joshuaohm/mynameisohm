@@ -8,6 +8,8 @@ function openMenu(e){
     e.stopPropagation();
 
     if(!$('.container').hasClass('slide-right')){
+        $('body').addClass('scroll-lock');
+        $('html').addClass('scroll-lock');
         $('.container').addClass('slide-right');
         $('#menu-button-container .menu-button').children().addClass('turn-brown');
         $('#close-button-container .close-button').children().removeClass('turn-brown');
@@ -23,13 +25,14 @@ function closeMenu(e){
     e.stopPropagation();
 
     if($('.container').hasClass('slide-right')){
+        $('body').removeClass('scroll-lock');
+        $('html').removeClass('scroll-lock');
         $('.container').removeClass('slide-right');
         $('#menu-button-container .menu-button').children().removeClass('turn-brown');
         $('#close-button-container .close-button').children().addClass('turn-brown');
         $('#container').off('click');
         $('#close-button-container').off('click');
         $('#menu-button-container').on('click', openMenu);
-        
     }
 }
 
