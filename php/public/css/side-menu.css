@@ -76,6 +76,10 @@
   cursor: pointer;
 }
 
+.side-menu .side-nav .nav-list .active{
+  color: #3e2a14;
+}
+
 @media only screen and (min-width: 481px) and (max-width: 768px){
 
   .side-menu{

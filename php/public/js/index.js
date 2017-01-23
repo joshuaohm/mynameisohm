@@ -41,7 +41,6 @@ function rotatePassions(ids){
 	}
 
 	$('.passion#'+id).addClass('visible');
-
 }
 
 

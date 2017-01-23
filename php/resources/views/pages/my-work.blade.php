@@ -1,5 +1,3 @@
-@extends('layout.default')
-@section('content')
 {{ Html::script('js/my-work.js') }}
 {{ Html::style('css/my-work.css') }}
 <div class="my-work-container">
@@ -16,9 +14,8 @@
 								@endforeach
 							</div>
 						</div>
-						<a href='{{ $works[$index]->url}}' data-index="{{ $index }}">
-							<img src='{{ asset("img/".$works[$index]->name."-big.jpg") }}' data-index="{{ $index }}"></img>
-						</a>
+						<a href='{{ $works[$index]->url}}' data-index="{{ $index }}"></a>
+						<img src='{{ asset("img/".$works[$index]->name."-big.jpg") }}' data-index="{{ $index }}"></img>
 					</div>
 					<div class="item small" data-index="{{ $index }}">
 						<div class="details" data-index="{{ $index }}">
@@ -28,9 +25,8 @@
 								@endforeach
 							</div>
 						</div>
-						<a href='{{ $works[$index]->url}}' data-index="{{ $index }}">
-							<img src='{{ asset("img/".$works[$index]->name."-small.jpg") }}' data-index="{{ $index }}"></img>
-						</a>
+						<a href='{{ $works[$index]->url}}' data-index="{{ $index }}"></a>
+						<img src='{{ asset("img/".$works[$index]->name."-small.jpg") }}' data-index="{{ $index }}"></img>
 					</div>
 					@if ( ($index + 1) <= count($works) )
 						<div class="item big" data-index="{{ ($index+1) }}">
@@ -41,9 +37,8 @@
 									@endforeach
 								</div>
 							</div>
-							<a href='{{ $works[$index+1]->url}}' data-index="{{ ($index+1) }}">
-								<img src='{{ asset("img/".$works[$index+1]->name."-big.jpg") }}' data-index="{{ ($index+1) }}"></img>
-							</a>
+							<a href='{{ $works[$index+1]->url}}' data-index="{{ ($index+1) }}"></a>
+							<img src='{{ asset("img/".$works[$index+1]->name."-big.jpg") }}' data-index="{{ ($index+1) }}"></img>
 						</div>
 						<div class="item small" data-index="{{ ($index+1) }}">
 							<div class="details" data-index="{{ ($index+1) }}">
@@ -53,9 +48,8 @@
 									@endforeach
 								</div>
 							</div>
-							<a href='{{ $works[$index+1]->url}}' data-index="{{ ($index+1) }}">
-								<img src='{{ asset("img/".$works[$index+1]->name."-small.jpg") }}' data-index="{{ ($index+1) }}"></img>
-							</a>
+							<a href='{{ $works[$index+1]->url}}' data-index="{{ ($index+1) }}"></a>
+							<img src='{{ asset("img/".$works[$index+1]->name."-small.jpg") }}' data-index="{{ ($index+1) }}"></img>
 						</div>
 					@endif
 				</div>
@@ -63,4 +57,3 @@
 		@endif
 	@endforeach
 </div>
-@stop
