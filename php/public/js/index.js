@@ -54,6 +54,7 @@ function activateLink(){
     $('.list-item[data-url="/home"]').addClass('active');
 }
 
+var interval;
 
 $(document).ready(function (){
 
@@ -68,9 +69,12 @@ $(document).ready(function (){
 	});
 
 	//Rotate the visible 'passion'
-	setInterval(function (){
-		rotatePassions(ids);
-	},2500);
+	if(typeof interval != "number"){
+		interval = setInterval(function (){
+			rotatePassions(ids);
+		},2500);
+	}
+		
 
     
 });
