@@ -173,6 +173,12 @@ body, html{
     transition: all .4s;
   }
 
+  .main-body .body-content{
+        width: calc(100% - 16px);
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
   .slide-right{
     transform: translateX(50%);
   }

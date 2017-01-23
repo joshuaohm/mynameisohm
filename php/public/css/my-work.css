@@ -1,6 +1,129 @@
 .my-work-container{
 	display: block;
 	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.my-work-container .headline{
+	font-family: 'Roboto Condensed';
+	font-size: 24px;
+	color: white;
+	text-align: center;
+	margin-bottom: 20px;
+	-webkit-font-smoothing: antialiased;
+}
+
+.my-work-container .row{
+	display: inline-block;
+	position: relative;
+	margin-bottom: 8px;
 	height:100%;
+	width:100%;
+	
+}
+
+.my-work-container .row-wrapper{
+	display: inline-block;
+	position: relative;
+	left:50%;
+	transform: translateX(-50%);
+}
+
+.my-work-container .row-wrapper .big{
+	width:512px;
+	height:384px;
+	display: inline-block;
+	position: relative;
+	margin-right: 16px;
+}
+
+.my-work-container .row-wrapper .small{
+	width:256px;
+	height:192px;
+	display: none;
+	position: relative;
+	margin-right: 8px;
+}
+
+.my-work-container .item:last-child{
+	margin-right: 0px;
+}
+
+.my-work-container .item a{
 	width: 100%;
+	height: 100%;
+	position: absolute;
+	display: block;
+}
+
+.my-work-container .row-wrapper .details{
+	width: 85%;
+	height:85%;
+	position: absolute;
+	display: block;
+	background: linear-gradient(45deg, #3e2a14, #654321);
+	background-size: 100% 100%;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	opacity:0;
+	transition: opacity 0.5s ease-in-out;
+	z-index: 3;
+	padding-left: 7%;
+	padding-right: 7%;
+}
+
+.my-work-container .row-wrapper .details .details-wrapper{
+	position: relative;
+	top:50%;
+	transform: translateY(-50%);
+	display: none;
+}
+
+.my-work-container .row-wrapper .details .detail{
+	font-family: 'Roboto Condensed';
+	color: white;
+	text-align: left;
+	margin-bottom: 20px;
+	-webkit-font-smoothing: antialiased;
+}
+
+.my-work-container .row-wrapper .big .details .detail{
+	font-size: 24px;
+}
+
+.my-work-container .row-wrapper .small .details .detail{
+	font-size: 12px;
+}
+
+@media only screen and (max-width:1280px){
+
+	.my-work-container .row-wrapper .big{
+		display:none;
+	}
+	.my-work-container .row-wrapper .small{
+		display: inline-block;
+	}
+
+}
+
+@media only screen and (max-width:624px){
+
+	.my-work-container .row{
+		margin-bottom: 0px;
+	}
+	.my-work-container .row-wrapper .small{
+		display: block;
+		margin-right: 0px;
+		margin-bottom: 8px;
+	}
+}
+
+.fade-in{
+	opacity: .95 !important;
+}
+
+.show{
+	display: block !important;
 }

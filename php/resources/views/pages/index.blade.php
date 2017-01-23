@@ -2,9 +2,7 @@
 @section('content')
 {{ Html::script('js/index.js') }}
 {{ Html::style('css/index.css') }}
-<div class="background"></div>
 <div class="index-container">
-
 	<div class="content">
 		<div class="sentence block">Hi, My name is Joshua Ohm</div>
 

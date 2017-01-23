@@ -27,7 +27,9 @@
     </div>
     <div class="side-nav">
         <ul class="nav-list">
-            <li class="list-item">COMING SOON</li>
+            @foreach($links as $index => $link)
+                <li class="list-item" data-url="{{ $link->url }}">{{$link->text}}</li>
+            @endforeach
         </ul>
     </div>
 </div>
