@@ -2,6 +2,11 @@ function setIndexBinds(){
 	$('.index-container .content .yellow').on('click', hitThatBurger);
 }
 
+function setPageCookie(){
+
+	setCookie("lastPage", 'home', '1');
+}
+
 function hitThatBurger(e){
 
 	e.preventDefault();
@@ -43,10 +48,18 @@ function rotatePassions(ids){
 	$('.passion#'+id).addClass('visible');
 }
 
+function activateLink(){
+
+	$('.list-item').removeClass('active');
+    $('.list-item[data-url="/home"]').addClass('active');
+}
+
 
 $(document).ready(function (){
 
+	//setPageCookie();
 	setIndexBinds();
+	activateLink();
 
 	var ids = new Array();
 

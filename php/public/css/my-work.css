@@ -75,7 +75,6 @@
 	position: relative;
 	top:50%;
 	transform: translateY(-50%);
-	display: none;
 }
 
 .my-work-container .row-wrapper .details .detail{

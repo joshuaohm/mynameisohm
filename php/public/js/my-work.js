@@ -6,6 +6,10 @@ function setMyWorkBinds(){
 	$('.my-work-container .item').on('click', navigateLink);
 }
 
+function setPageCookie(){
+	setCookie("lastPage", 'my-work', '1');
+}
+
 
 function fadeMenuIn(e){
 
@@ -32,6 +36,12 @@ function fadeMenuOut(e){
 	
 }
 
+function activateLink(){
+
+	$('.list-item').removeClass('active');
+    $('.list-item[data-url="/my-work"]').addClass('active');
+}
+
 function navigateLink(e){
 
 	e.preventDefault();
@@ -44,11 +54,13 @@ function navigateLink(e){
 	}
 
 	var url = $('.item[data-index='+index+']').children('a').attr('href');
-	window.location.href = url;
+	window.open(url, '_blank');
 }
 
 $(document).ready(function (){
 
+	//setPageCookie();
 	setMyWorkBinds();
+	activateLink();
 
 });

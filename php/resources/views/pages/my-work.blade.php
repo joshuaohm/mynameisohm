@@ -1,7 +1,7 @@
 {{ Html::script('js/my-work.js') }}
 {{ Html::style('css/my-work.css') }}
 <div class="my-work-container">
-	<div class="headline">My Work</div>
+	<div class="headline">Mouse over to see more details</div>
 	@foreach ($works as $index => $work)
 		@if ($index % 2 == 0)
 			<div class="row">
