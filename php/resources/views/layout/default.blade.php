@@ -4,12 +4,12 @@
     @include('includes.head')
 </head>
 <body>
-<div class="container mid" id="container">
 
+<div class="container mid" id="container">
     <header class="header">
         @include('includes.header')
     </header>
-
+    <div class="load over" id="load"></div>
     <div id="main" class="main-body">
         <div class="body-content">
             @yield('content')

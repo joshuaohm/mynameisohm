@@ -59,8 +59,16 @@ function handleLinkClick(e){
     if(!$(e.target).hasClass('active')){
         $('.side-menu .nav-list .list-item').removeClass('active');
         $(e.target).addClass('active');
+
         var url = $(e.target).data('url');
+        
         loadUrl(url);
+        
+        $('#load').addClass('fade-in');
+
+        setTimeout(function(){
+            $('#load').removeClass('fade-in');
+        },500);
     }
     
 }
