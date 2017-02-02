@@ -2,6 +2,7 @@
 {{ Html::style('css/my-work.css') }}
 <div class="my-work-container">
 	<div class="headline">Mouse over to see more details</div>
+	<div class="mobile-headline">Click once to see more details, click again to visit the page</div>
 	@foreach ($works as $index => $work)
 		@if ($index % 2 == 0)
 			<div class="row">

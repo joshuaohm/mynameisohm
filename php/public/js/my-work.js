@@ -1,39 +1,96 @@
 
 function setMyWorkBinds(){
 
-	$('.my-work-container .item').on('mouseenter', fadeMenuIn);
+	$('.my-work-container .item').on('mouseenter touchstart', handleMenuFadeIn);
 	$('.my-work-container .item').on('mouseleave', fadeMenuOut);
-	$('.my-work-container .item').on('click', navigateLink);
+	
+	$('.my-work-container .item').on('click', handleLinkClick);
 }
 
 function setPageCookie(){
 	setCookie("lastPage", 'my-work', '1');
 }
 
+(function( $ ){
 
-function fadeMenuIn(e){
+	$.fn.filterItemIndex = function(index) {
 
-	e.preventDefault();
-	e.stopPropagation();
+		return this.filter("[data-index='"+index+"']");
+	};
+
+}( jQuery ));
+
+function getIndex(e){
 
 	var index = $(e.target).data('index');
 
-	$('.my-work-container .details-wrapper[data-index='+index+']').addClass('show');
-	$('.my-work-container .details[data-index='+index+']').addClass('fade-in');
+	if(typeof(index) === "undefined"){
+		index = $(e.target).parent().data('index');
+	}
+
+	return index;
 }
 
-function fadeMenuOut(e){
+function checkIsSmall(index){
+	var conditional = $('.my-work-container .row-wrapper .small').filterItemIndex(index).css('display');
+	if(conditional == 'block' || conditional == 'inline-block'){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+function handleLinkClick(e){
 
 	e.preventDefault();
 	e.stopPropagation();
 
-	var index = $(e.target).data('index');
+	var index = getIndex(e);
+	navigateLink(index);
+}
 
-	$('.my-work-container .details[data-index='+index+']').removeClass('fade-in');
-	setTimeout(function(){
-		$('.my-work-container .details-wrapper[data-index='+index+']').removeClass('show');
-	},500);
-	
+
+function handleMenuFadeIn(e){
+
+	e.preventDefault();
+	e.stopPropagation();
+
+	var index = getIndex(e);
+	var isSmall = checkIsSmall(index);
+	var selector = "";
+
+	//determine which set of items to interact with
+	if(isSmall){
+		selector = ".my-work-container .row-wrapper .small > .details";
+	}
+	else{
+		selector = ".my-work-container .row-wrapper .big > .details";
+	}
+
+	//If a Mobile interaction
+	if(e.originalEvent.type === 'touchstart' ){
+
+		//Already visible, treat like a click
+		if($(selector).filterItemIndex(index).hasClass('fade-in')){
+			navigateLink(index);
+		}
+		//Make details visible
+		else{
+			$('.my-work-container .item > .details').removeClass('fade-in').promise().done(fadeMenuIn(selector, index));
+		}
+	}
+	else if(e.originalEvent.type === 'mouseover'){
+		$('.my-work-container .item > .details').removeClass('fade-in').promise().done(fadeMenuIn(selector,index));
+	}
+}
+
+function fadeMenuIn(selector, index){
+	$(selector).filterItemIndex(index).addClass('fade-in');
+}
+
+function fadeMenuOut(){
+	$('.my-work-container .details').removeClass('fade-in');	
 }
 
 function activateLink(){
@@ -42,18 +99,9 @@ function activateLink(){
     $('.list-item[data-url="/my-work"]').addClass('active');
 }
 
-function navigateLink(e){
+function navigateLink(index){
 
-	e.preventDefault();
-    e.stopPropagation();
-
-	var index = $(e.target).data('index');
-
-	if(typeof(index) === "undefined"){
-		index = $(e.target).parent().data('index');
-	}
-
-	var url = $('.item[data-index='+index+']').children('a').attr('href');
+	var url = $('.item').filterItemIndex(index).children('a').attr('href');
 	window.open(url, '_blank');
 }
 

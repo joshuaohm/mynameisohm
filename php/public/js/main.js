@@ -61,16 +61,23 @@ function handleLinkClick(e){
         $(e.target).addClass('active');
 
         var url = $(e.target).data('url');
-        
+
         loadUrl(url);
         
-        $('#load').addClass('fade-in');
-
-        setTimeout(function(){
-            $('#load').removeClass('fade-in');
-        },500);
     }
     
+}
+
+function fadeLoadScreenIn(){
+    $('#load').addClass('fade-in');
+}
+
+function fadeLoadScreenOut(){
+
+    setTimeout(function(){
+        $('#load').removeClass('fade-in');
+    },100);
+
 }
 
 function loadUrl(url, e){
@@ -80,7 +87,10 @@ function loadUrl(url, e){
         type: 'GET',
         async: true,
         success: function (data) {
-            $('.body-content').html(data);
+            fadeLoadScreenIn();
+            setTimeout(function() {
+                $('.body-content').html(data).promise().done(fadeLoadScreenOut());
+            },100);     
         }
     });
 

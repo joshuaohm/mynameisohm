@@ -148,7 +148,7 @@ body, html{
   background: linear-gradient(45deg, #1d2b0e, #436521);
   opacity:0;
   pointer-events: none;
-  transition: opacity .2s ease-in-out;
+  transition: opacity .1s linear;
 }
 
 /* COLORS */
