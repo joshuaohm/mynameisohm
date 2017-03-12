@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use MyNameIsOhm\User;
+use MyNameIsOhm\Tasks;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,11 @@ Route::get('/user', function (Request $request) {
 Route::get('/users', function()
 {
     return User::all();
+});
+
+Route::get('/tasks/{userId}', function($userId)
+{
+    return Tasks::where('ownerId', $userId)
+      ->orderBy('id', 'asc')
+      ->get();
 });

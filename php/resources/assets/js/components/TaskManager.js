@@ -8,53 +8,80 @@ class TaskManager extends Component {
 
         this.state = {
             tasks: []
-        }
+        };
     }
 
-    componentDidMount() {
-        /*
-      fetch('/api/tasks')
+    componentDidMount(){
+        fetch('/api/tasks/'+userId)
         .then(response => {
             return response.json();
         })
-        .then(users => {
-            this.setState({ users });
-      });*/
+        .then(tasks => {
 
-        var tasks = [
-            {
-                "id":0,
-                "title":"test",
-                "hour":1,
-                "minute":24,
-                "state": "paused"
-            },
-            {
-                "id":1,
-                "title":"test",
-                "hour":2,
-                "minute":36,
-                "state": "paused"
+            var ci = 1;
+
+            for(var i = 0; i < tasks.length; i++){
+                tasks[i].color = ci;
+
+                if(ci === 7){
+                    ci = 1;
+                }
+                else{
+                    ci++;
+                }
             }
-        ];
 
-        this.setState({tasks});
+            console.log(JSON.stringify(tasks));
+            this.setState({tasks});
+      });
+    }
+
+    handleTimerButton(e){
+        e.preventDefault();
+        var taskId = $(e.target).closest('.task').data('task');
+
+        var newTasks = this.state.tasks;
+
+        if(newTasks[taskId].state === 'play'){
+            newTasks[taskId].state = 'paused';
+        }
+        else if(newTasks[taskId].state === 'paused'){
+            newTasks = this.pauseAllTasks(newTasks);
+            newTasks[taskId].state = 'play';
+        }
+        
+        this.setState({tasks: newTasks});
+    }
+
+    pauseAllTasks(taskList){
+        for(var i = 0; i < taskList.length; i++){
+            taskList[i].state = 'paused';
+        }
+
+        return taskList;
     }
 
     renderTasks() {
-        return this.state.tasks.map(task => {
-            return (
-                <div className="task" key={ task.id }>
-                    <div className="title"><span>{ task.title }</span></div>
-                    <div className="time">
-                        <div className="hour"><span>{ task.hour }</span></div>
-                        <div className="colon"><span>:</span></div>
-                        <div className="minute"><span>{ task.minute }</span></div>
+        console.log('length'+this.state.tasks.length);
+        if(this.state.tasks.length === 0 || this.state.tasks == null){
+            return (<div></div>);
+        }
+        else{
+            console.log('data '+JSON.stringify(this.state));
+            return this.state.tasks.map(task => {
+                return (
+                    <div className={ "task color-"+task.color } key={ task.id } data-task={ task.id }>
+                        <div className="title" data-task={ task.id }><span>{ task.title }</span></div>
+                        <div className="time">
+                            <div className="hour" data-task={ task.id }><span>{ task.hour }</span></div>
+                            <div className="colon"><span>:</span></div>
+                            <div className="minute" data-task={ task.id }><span>{ task.minute }</span></div>
+                        </div>
+                        <div className="timer-btn" data-state={ task.state } data-task={ task.id } onClick={(event) => {this.handleTimerButton(event)}}><span>{this.renderTimerButton(task.state)}</span></div>
                     </div>
-                    <div className="timer-btn" data-state={ task.state }><span>{this.renderTimerButton(task.state)}</span></div>
-                </div>
-            );
-        })
+                );
+            });
+        }
     }
 
     renderTimerButton(state){

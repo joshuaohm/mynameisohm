@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-
+use MyNameIsOhm\User;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,5 +53,7 @@ Route::get('/my-work', function () {
 Auth::routes();
 
 Route::get('/app', function (){
-	return view('app');
+
+	$id = Auth::user()->id;
+	return view('app', ['userId' => $id]);
 });
