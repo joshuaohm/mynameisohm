@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +47,19 @@ Route::get('/my-work', function () {
     
 
     return view('pages.my-work', ['works' => $works, 'details' => $details, 'links' => $links])->render();
+});
+
+Auth::routes();
+
+Route::get('/users', function()
+{
+    return User::all();
+})->middleware('admin');
+
+Route::get('/app', function (){
+	return view('app');
+});
+
+Route::get('/token', function(){
+	return User::getToken();
 });
