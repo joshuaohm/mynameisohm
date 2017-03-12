@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace MyNameIsOhm\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

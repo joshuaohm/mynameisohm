@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use App\User;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,15 +51,6 @@ Route::get('/my-work', function () {
 
 Auth::routes();
 
-Route::get('/users', function()
-{
-    return User::all();
-})->middleware('admin');
-
 Route::get('/app', function (){
 	return view('app');
-});
-
-Route::get('/token', function(){
-	return User::getToken();
 });

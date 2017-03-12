@@ -7,25 +7,13 @@ class Example extends Component {
         super(props);
 
         this.state = {
-            token: $('meta[name="csrf-token"]').attr('content'),
             users: []
         }
     }
 
     componentDidMount() {
 
-      var myHeaders = {
-         'X-CSRF-TOKEN': this.state.token
-      };
-
-      var settings = {
-         method: 'GET',
-         headers: myHeaders,
-         mode: 'cors',
-         cache: 'default'
-      };
-
-      fetch('/users', settings)
+      fetch('/api/users')
         .then(response => {
             return response.json();
         })

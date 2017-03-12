@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use MyNameIsOhm\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::get('/users', function()
+{
+    return User::all();
+});
