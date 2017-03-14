@@ -54,6 +54,13 @@ Auth::routes();
 
 Route::get('/app', function (){
 
-	$id = Auth::user()->id;
-	return view('app', ['userId' => $id]);
+	if(Auth::user()){
+		$id = Auth::user()->id;
+		return view('app', ['userId' => $id]);
+	}
+	else{
+		return view('app', ['userId' => null]);
+	}
+	
+	
 });

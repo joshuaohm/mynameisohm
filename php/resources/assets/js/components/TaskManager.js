@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery'; 
+import $ from 'jquery';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class TaskManager extends Component {
     constructor(props) {
@@ -11,46 +12,116 @@ class TaskManager extends Component {
         };
     }
 
-    componentDidMount(){
-        fetch('/api/tasks/'+userId)
-        .then(response => {
-            return response.json();
-        })
-        .then(tasks => {
+    assignColors(tasks){
 
-            var ci = 1;
+        var ci = 1;
 
-            for(var i = 0; i < tasks.length; i++){
-                tasks[i].color = ci;
+        for(var i = 0; i < tasks.length; i++){
 
-                if(ci === 7){
-                    ci = 1;
-                }
-                else{
-                    ci++;
-                }
+            tasks[i].color = ci;
+
+            if(ci === 7){
+                ci = 1;
+            }
+            else{
+                ci++;
+            }
+        }
+
+        return tasks;
+    }
+
+    parseTimes(tasks){
+
+        for(var i = 0; i < tasks.length; i++){
+
+
+
+            tasks[i].hour = Math.floor(tasks[i].duration / 3600);
+            tasks[i].minute = Math.floor((tasks[i].duration % 3600) / 60);
+        
+            if(tasks[i].hour < 10){
+                tasks[i].hour = "0"+tasks[i].hour;
             }
 
-            console.log(JSON.stringify(tasks));
-            this.setState({tasks});
-      });
+            if(tasks[i].minute < 10){
+                tasks[i].minute = "0"+tasks[i].minute;
+            }
+        }
+
+        return tasks;
+    }
+
+    componentDidMount(){
+
+        if(userId !== null){
+            fetch('/api/tasks/'+userId)
+                .then(response => {
+                    return response.json();
+                })
+                .then(tasks => {
+
+                    tasks = this.assignColors(tasks);
+                    tasks = this.parseTimes(tasks);
+                    
+                    this.setState({tasks});
+              });
+        }
+
+        
     }
 
     handleTimerButton(e){
         e.preventDefault();
-        var taskId = $(e.target).closest('.task').data('task');
 
+        var taskId = $(e.target).parents('.task').data('task');
         var newTasks = this.state.tasks;
+        var clickTime = new Date().getTime();
 
-        if(newTasks[taskId].state === 'play'){
-            newTasks[taskId].state = 'paused';
-        }
-        else if(newTasks[taskId].state === 'paused'){
-            newTasks = this.pauseAllTasks(newTasks);
-            newTasks[taskId].state = 'play';
-        }
+        //convert to 0-index
+        taskId--;
+
+        //Set Task Times before states so no information is lost
+        newTasks = this.setTaskTimes(taskId, clickTime, newTasks);
+        newTasks = this.setTaskStates(taskId, newTasks);
+        
         
         this.setState({tasks: newTasks});
+    }
+
+    setTaskTimes(taskId, clickTime, tasks){
+
+        //Case 1, task was paused
+        if(tasks[taskId].state === 'paused'){
+            tasks[taskId].startTime = clickTime;
+            tasks[taskId].stopTime = null;
+        }
+        //Case 2, task was playing all ready
+        else if(tasks[taskId].state === 'play'){
+
+            //Smooth Sailing -- if there's an error at this part, do nothing.
+            if(tasks[taskId].startTime && tasks[taskId].stopTime === null){
+                tasks[taskId].stopTime = clickTime;
+                tasks = this.updateTimerDuration(taskId, tasks);
+            }
+        }
+
+        return tasks;
+    }
+
+    setTaskStates(taskId, tasks){
+
+        if(tasks.length > 0){
+            if(tasks[taskId].state === 'play'){
+                tasks[taskId].state = 'paused';
+            }
+            else if(tasks[taskId].state === 'paused'){
+                tasks = this.pauseAllTasks(tasks);
+                tasks[taskId].state = 'play';
+            }
+        }
+
+        return tasks;
     }
 
     pauseAllTasks(taskList){
@@ -61,23 +132,35 @@ class TaskManager extends Component {
         return taskList;
     }
 
+    updateTimerDuration(taskId, tasks){
+
+        if(tasks[taskId].startTime && tasks[taskId].stopTime){
+
+            console.log(tasks[taskId].stopTime - tasks[taskId].startTime);
+        }
+
+        return tasks;
+    }
+
     renderTasks() {
-        console.log('length'+this.state.tasks.length);
+
         if(this.state.tasks.length === 0 || this.state.tasks == null){
             return (<div></div>);
         }
         else{
-            console.log('data '+JSON.stringify(this.state));
+
             return this.state.tasks.map(task => {
                 return (
                     <div className={ "task color-"+task.color } key={ task.id } data-task={ task.id }>
                         <div className="title" data-task={ task.id }><span>{ task.title }</span></div>
                         <div className="time">
                             <div className="hour" data-task={ task.id }><span>{ task.hour }</span></div>
-                            <div className="colon"><span>:</span></div>
+                            <div className="colon"> 
+                                <span className={"animation-colon "+task.state}>:</span>
+                            </div>
                             <div className="minute" data-task={ task.id }><span>{ task.minute }</span></div>
                         </div>
-                        <div className="timer-btn" data-state={ task.state } data-task={ task.id } onClick={(event) => {this.handleTimerButton(event)}}><span>{this.renderTimerButton(task.state)}</span></div>
+                        <div className="timer-btn" data-state={ task.state } data-task={ task.id } onClick={(event) => {this.handleTimerButton(event)}}>{this.renderTimerButton(task.state)}</div>
                     </div>
                 );
             });

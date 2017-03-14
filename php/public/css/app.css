@@ -7744,6 +7744,60 @@ button.close {
 }
 
 /* '' */
+.animation-colon.play {
+  -webkit-animation-name: blink;
+  animation-name: blink;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.animation-colon.paused {
+  -webkit-animation-name: none;
+  animation-name: none;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-iteration-count: 0;
+  animation-iteration-count: 0;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .navbar {
   background-color: #ddd676;
 }
@@ -7828,8 +7882,9 @@ button.close {
   line-height: 56px;
 }
 
-.task .timer-btn i {
+.task .timer-btn .i {
   text-align: right;
+  line-height: 58px;
 }
 
 .add-task {
