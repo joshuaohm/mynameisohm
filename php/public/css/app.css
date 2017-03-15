@@ -7690,8 +7690,8 @@ button.close {
 
 @font-face {
   font-family: 'fontello';
-  src: url("../font/fontello.eot?4418830");
-  src: url("../font/fontello.eot?4418830#iefix") format("embedded-opentype"), url("../font/fontello.woff2?4418830") format("woff2"), url("../font/fontello.woff?4418830") format("woff"), url("../font/fontello.ttf?4418830") format("truetype"), url("../font/fontello.svg?4418830#fontello") format("svg");
+  src: url("../font/fontello.eot?86031115");
+  src: url("../font/fontello.eot?86031115#iefix") format("embedded-opentype"), url("../font/fontello.woff2?86031115") format("woff2"), url("../font/fontello.woff?86031115") format("woff"), url("../font/fontello.ttf?86031115") format("truetype"), url("../font/fontello.svg?86031115#fontello") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -7702,7 +7702,7 @@ button.close {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?4418830#fontello') format('svg');
+    src: url('../font/fontello.svg?86031115#fontello') format('svg');
   }
 }
 */
@@ -7744,6 +7744,11 @@ button.close {
 }
 
 /* '' */
+.icon-upload-cloud:before {
+  content: '\f0ee';
+}
+
+/* '' */
 .animation-colon.play {
   -webkit-animation-name: blink;
   animation-name: blink;
@@ -7843,12 +7848,13 @@ button.close {
   height: 60px;
   margin-bottom: 20px;
   display: inline-block;
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
-.task .title, .task .time, .task .timer-btn {
+.task .title, .task .time, .task .timer-btn, .task .upload-btn {
   display: inline-block;
-  width: 25%;
+  width: 20%;
   height: 100%;
   vertical-align: top;
   position: relative;
@@ -7857,7 +7863,7 @@ button.close {
   text-shadow: 1px 2px 2px #000000;
 }
 
-.task .title span, .task .time span, .task .timer-btn span {
+.task .title span, .task .time span, .task .timer-btn span, .task .upload-btn span {
   line-height: 58px;
   text-align: center;
   display: block;
@@ -7882,8 +7888,13 @@ button.close {
   line-height: 56px;
 }
 
-.task .timer-btn .i {
-  text-align: right;
+.task .upload-btn {
+  text-align: center;
+  line-height: 58px;
+}
+
+.task .timer-btn {
+  text-align: center;
   line-height: 58px;
 }
 

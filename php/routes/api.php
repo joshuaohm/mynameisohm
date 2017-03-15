@@ -24,9 +24,6 @@ Route::get('/users', function()
     return User::all();
 });
 
-Route::get('/tasks/{userId}', function($userId)
-{
-    return Tasks::where('ownerId', $userId)
-      ->orderBy('id', 'asc')
-      ->get();
-});
+Route::get('/tasks/{userId}', 'TimerApiController@getTasksForUser');
+
+Route::post('/tasks/{userId}', 'TimerApiController@updateTaskForUser');

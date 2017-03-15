@@ -17,6 +17,12 @@
       "css": "pause",
       "code": 59393,
       "src": "fontawesome"
+    },
+    {
+      "uid": "de2fc7a5c986ab8c622f63455d7cf814",
+      "css": "upload-cloud",
+      "code": 61678,
+      "src": "fontawesome"
     }
   ]
 }

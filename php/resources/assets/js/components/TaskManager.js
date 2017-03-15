@@ -12,6 +12,25 @@ class TaskManager extends Component {
         };
     }
 
+    componentDidMount(){
+
+        if(userId !== null){
+            fetch('/api/tasks/'+userId)
+                .then(response => {
+                    return response.json();
+                })
+                .then(tasks => {
+
+                    tasks = this.assignColors(tasks);
+                    tasks = this.parseTimes(tasks);
+                    
+                    this.setState({tasks});
+              });
+        }
+
+        
+    }
+
     assignColors(tasks){
 
         var ci = 1;
@@ -52,26 +71,19 @@ class TaskManager extends Component {
         return tasks;
     }
 
-    componentDidMount(){
+    getActiveTask(){
 
-        if(userId !== null){
-            fetch('/api/tasks/'+userId)
-                .then(response => {
-                    return response.json();
-                })
-                .then(tasks => {
-
-                    tasks = this.assignColors(tasks);
-                    tasks = this.parseTimes(tasks);
-                    
-                    this.setState({tasks});
-              });
+        for(var i = 0; i < this.state.tasks.length; i++){
+            if(this.state.tasks[i].state === 'play'){
+                return i;
+            }
         }
 
-        
+        return false;
     }
 
     handleTimerButton(e){
+
         e.preventDefault();
 
         var taskId = $(e.target).parents('.task').data('task');
@@ -81,29 +93,50 @@ class TaskManager extends Component {
         //convert to 0-index
         taskId--;
 
-        //Set Task Times before states so no information is lost
-        newTasks = this.setTaskTimes(taskId, clickTime, newTasks);
-        newTasks = this.setTaskStates(taskId, newTasks);
+        this.updateTasks(true, taskId, clickTime, newTasks);
+        this.startTimerInterval();
+
+    }
+
+    handleSubmitButton(e){
+
+        e.preventDefault();
+
+         var taskId = $(e.target).data('task');
+         var newTasks = this.state.tasks;
+
+    }
+
+    updateTasks(wasClicked, taskId, currTime, newTasks){
+
+        if(wasClicked){
+            newTasks = this.setTaskStates(taskId, newTasks);
+        }
+        newTasks = this.setTaskTimes(taskId, currTime, newTasks);
         
-        
+        newTasks = this.assignColors(newTasks);
+        newTasks = this.parseTimes(newTasks);
         this.setState({tasks: newTasks});
     }
 
-    setTaskTimes(taskId, clickTime, tasks){
+    setTaskTimes(taskId, currTime, tasks){
 
-        //Case 1, task was paused
-        if(tasks[taskId].state === 'paused'){
-            tasks[taskId].startTime = clickTime;
-            tasks[taskId].stopTime = null;
-        }
-        //Case 2, task was playing all ready
-        else if(tasks[taskId].state === 'play'){
+        //Case 1, task was playing all ready, still playing
+        if(tasks[taskId].state === 'play' && Number.isInteger(tasks[taskId].startTime)){
 
             //Smooth Sailing -- if there's an error at this part, do nothing.
-            if(tasks[taskId].startTime && tasks[taskId].stopTime === null){
-                tasks[taskId].stopTime = clickTime;
+            if(tasks[taskId].startTime && !Number.isInteger(tasks[taskId].stopTime)){
+                tasks[taskId].stopTime = currTime;
                 tasks = this.updateTimerDuration(taskId, tasks);
             }
+        }
+        //Case 2, task was just started
+        else if(tasks[taskId].state === 'play' && !Number.isInteger(tasks[taskId].startTime) && !Number.isInteger(tasks[taskId].stopTime)){
+            tasks[taskId].startTime = currTime;
+        }
+        //Case 3, task was just paused
+        else if(tasks[taskId].state === 'paused' && Number.isInteger(tasks[taskId].startTime) && Number.isInteger(tasks[taskId].stopTime)){
+            tasks = this.updateTimerDuration(taskId, tasks);
         }
 
         return tasks;
@@ -135,11 +168,46 @@ class TaskManager extends Component {
     updateTimerDuration(taskId, tasks){
 
         if(tasks[taskId].startTime && tasks[taskId].stopTime){
-
-            console.log(tasks[taskId].stopTime - tasks[taskId].startTime);
+            
+            var difference = Math.floor((tasks[taskId].stopTime - tasks[taskId].startTime)/1000);
+            tasks[taskId].duration = parseInt(tasks[taskId].duration) + difference;
+            console.log("Stop: "+tasks[taskId].stopTime+" Start: "+tasks[taskId].startTime)
+            console.log("makes it diff:"+difference+" new duration: "+tasks[taskId].duration);
+            tasks[taskId].startTime = parseInt(tasks[taskId].stopTime);
+            tasks[taskId].stopTime = null;
         }
 
+        console.log('updateTimerDuration');
+        console.log(this.state.tasks);
         return tasks;
+    }
+
+    startTimerInterval(){
+
+        if(this.checkForActiveTasks()){
+
+            var self = this;
+            var taskId = self.getActiveTask();
+            var newTasks = self.state.tasks;
+            var currTime = new Date().getTime();
+            var updateTime = 60 - (newTasks[taskId].duration % 60);
+
+            setTimeout(function(){
+                self.updateTasks(false, taskId, currTime+(updateTime*1000), newTasks);
+                self.startTimerInterval();
+            },updateTime*1000);
+        }
+    }
+
+    checkForActiveTasks(){
+
+        for(var i = 0; i < this.state.tasks.length; i++){
+            if(this.state.tasks[i].state === 'play'){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     renderTasks() {
@@ -160,6 +228,7 @@ class TaskManager extends Component {
                             </div>
                             <div className="minute" data-task={ task.id }><span>{ task.minute }</span></div>
                         </div>
+                        <div className="upload-btn icon-upload-cloud" data-task={task.id} onClick={(event) => {this.handleSubmitButton(event)}}></div>
                         <div className="timer-btn" data-state={ task.state } data-task={ task.id } onClick={(event) => {this.handleTimerButton(event)}}>{this.renderTimerButton(task.state)}</div>
                     </div>
                 );
@@ -171,12 +240,12 @@ class TaskManager extends Component {
 
         if(state === "play"){
             return(
-                <div className="i icon-play"></div>
+                <div className="icon-pause"></div>
             );        
         }
         else if(state === "paused"){
             return (
-                <div className="i icon-pause"></div>
+                <div className="icon-play"></div>
             );
         }
     }

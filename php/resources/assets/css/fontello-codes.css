@@ -1,3 +1,4 @@
 
 .icon-play:before { content: '\e800'; } /* '' */
 .icon-pause:before { content: '\e801'; } /* '' */
+.icon-upload-cloud:before { content: '\f0ee'; } /* '' */

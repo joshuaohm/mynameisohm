@@ -39,13 +39,14 @@
   height: 60px;
   margin-bottom:20px;
   display: inline-block; 
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 
 
 
-  .title, .time, .timer-btn{
+  .title, .time, .timer-btn, .upload-btn{
     display: inline-block;
-    width: 25%;
+    width: 20%;
     height: 100%;
     vertical-align: top;
     position: relative;
@@ -84,8 +85,13 @@
     }
   }
 
-  .timer-btn .i{
-    text-align: right;
+  .upload-btn{
+    text-align: center;
+    line-height: 58px;
+  }
+
+  .timer-btn{
+    text-align: center;
     line-height: 58px;
   }
 }
