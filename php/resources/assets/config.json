@@ -23,6 +23,12 @@
       "css": "upload-cloud",
       "code": 61678,
       "src": "fontawesome"
+    },
+    {
+      "uid": "2626e3a1bbcd90e45849af3b58a1d594",
+      "css": "trash",
+      "code": 59394,
+      "src": "entypo"
     }
   ]
 }

@@ -44,38 +44,64 @@
 
 
 
-  .title, .time, .timer-btn, .upload-btn{
+  .title, .time, .buttonHolder{
     display: inline-block;
     width: 20%;
     height: 100%;
     vertical-align: top;
     position: relative;
     color: white;
-    font-size:28px;
+    font-size:20px;
     text-shadow: 1px 2px 2px #000000;
+    position: relative;
 
     span{
 
       //Task Height - Border Radius * 2 (currently 60px - 2px)
-      line-height: 58px;
       text-align: center;
-      display: block;
     }
   }
 
   .title{
-    margin-right: 10%;
+    margin-right: 30%;
+    word-wrap:break-word;
+
+    span{
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .time{
 
-    margin-right: 10%;
+    position: relative;
+
+    .time-wrapper{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      width:100%;
+      text-align: center;
+    }
 
     .hour, .colon, .minute{
       display: inline-block;
-      vertical-align: top;
+      vertical-align: middle;
       position: relative;
-      width: 33%;
+      width: calc(100%/3);
+    }
+
+    .hour{
+      left:25%;
+      transform: translateX(-25%);
+    }
+
+    .minute{
+      left:-25%;
+      transform: translateX(25%);
     }
 
     .colon span{
@@ -85,15 +111,30 @@
     }
   }
 
-  .upload-btn{
-    text-align: center;
-    line-height: 58px;
+  .buttonHolder{
+    right:0px;
+    margin-right:5%;
+
+    .upload-btn, .timer-btn, .delete-btn{
+      text-align: center;
+      line-height: 58px;
+      display: inline-block;
+      position: absolute;
+    }
+
+    .upload-btn{
+      left:0;
+    }
+    .timer-btn{
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .delete-btn{
+      right: 0;
+    }
   }
 
-  .timer-btn{
-    text-align: center;
-    line-height: 58px;
-  }
+  
 }
 
 .add-task{
@@ -104,3 +145,45 @@
   padding-right: 20px;
 }
 
+@media screen and (max-width: 1200px) and (min-width: 992px){
+  .task{
+
+    .title{
+      font-size: 16px;
+    }
+  }
+
+}
+
+@media screen and (max-width: 991px) and (min-width: 768px){
+  .task{
+
+    .title{
+      font-size: 20px;
+    }
+  }
+
+}
+
+
+@media screen and (max-width: 768px){
+  .task{
+
+    .title{
+      margin-right: 15%;
+    }
+
+    .buttonHolder{
+      width:35%;
+    }
+
+    .title{
+      font-size: 2.5vw;
+    }
+
+    .time{
+      font-size: 3vw;
+    }
+  }
+
+}
