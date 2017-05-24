@@ -26,4 +26,4 @@ Route::get('/users', function()
 
 Route::get('/tasks/{userId}', 'TimerApiController@getTasksForUser');
 
-Route::post('/tasks/{userId}', 'TimerApiController@updateTaskForUser');
+Route::post('/task', 'TimerApiController@updateTaskForUser');

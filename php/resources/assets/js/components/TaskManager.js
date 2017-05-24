@@ -6,6 +6,7 @@ import Modal from './Modal';
 import Confirm from './Confirm';
 
 class TaskManager extends Component {
+
     constructor(props) {
         super(props);
 
@@ -27,10 +28,8 @@ class TaskManager extends Component {
                     tasks = this.parseTimes(tasks);
                     
                     this.setState({tasks});
-              });
+            });
         }
-
-        
     }
 
     assignColors(tasks){
@@ -52,25 +51,36 @@ class TaskManager extends Component {
         return tasks;
     }
 
-    parseTimes(tasks){
+    checkForActiveTasks(){
 
-        for(var i = 0; i < tasks.length; i++){
-
-
-
-            tasks[i].hour = Math.floor(tasks[i].duration / 3600);
-            tasks[i].minute = Math.floor((tasks[i].duration % 3600) / 60);
-        
-            if(tasks[i].hour < 10){
-                tasks[i].hour = "0"+tasks[i].hour;
-            }
-
-            if(tasks[i].minute < 10){
-                tasks[i].minute = "0"+tasks[i].minute;
+        for(var i = 0; i < this.state.tasks.length; i++){
+            if(this.state.tasks[i].state === 'play'){
+                return true;
             }
         }
 
-        return tasks;
+        return false;
+    }
+
+    deleteTask(taskId){
+
+        var tasks = this.state.tasks;
+
+        tasks.splice(this.getTaskIndex(tasks, taskId), 1);
+        this.setState({tasks});
+
+        console.log(this.getTaskIndex(tasks, taskId));
+    }
+
+    getTaskIndex(tasks, taskId){
+
+        for(var i = 0; i < tasks.length; i++){
+            if(tasks[i].id === taskId){
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     getActiveTask(){
@@ -84,23 +94,90 @@ class TaskManager extends Component {
         return false;
     }
 
+    handleAddTaskButton(e){
+
+        e.preventDefault();
+
+        if(this.state.tasks.length === 0){
+            var taskId = 1;
+        }
+        else{
+            var taskId = this.state.tasks[this.state.tasks.length-1].id+1;
+        }
+        
+        var title = "New Task";
+        var duration = 0;
+
+        var newTask = {
+            'ownerId': userId,
+            'id': taskId,
+            'title': title,
+            'state': 'paused',
+            'duration': 0
+        }
+        var tasks = this.state.tasks;
+
+
+
+        tasks.push(newTask);
+        tasks = this.assignColors(tasks);
+        tasks = this.parseTimes(tasks);
+        this.setState({tasks});
+    }
+
+    handleDeleteButton(e){
+
+        e.preventDefault();
+
+        var self = this;
+        var taskId = $(e.target).data('task');
+
+        //convert to 0-index
+
+        var confirm = function(message, options) {
+          var cleanup, component, props, wrapper;
+          if (options == null) {
+            options = {};
+          }
+          props = $.extend({
+            message: message
+          }, options);
+          wrapper = document.body.appendChild(document.createElement('div'));
+          component = ReactDOM.render(<Confirm {...props}/>, wrapper);
+          cleanup = function() {
+            ReactDOM.unmountComponentAtNode(wrapper);
+            return setTimeout(function() {
+              return wrapper.remove();
+            });
+          };
+          return component.promise.always(cleanup).promise();
+        };
+
+        return confirm('Are you sure', {
+            description: 'Would you like to delete this task?',
+            confirmLabel: 'Yes',
+            abortLabel: 'No'
+        }).then((function(_this) {
+            return function() {
+                self.deleteTask(taskId);
+            };
+        })(this));
+
+    }
+
     handleTimerButton(e){
 
         e.preventDefault();
 
         var taskId = $(e.target).parents('.task').data('task');
         var newTasks = this.state.tasks;
-
-        
         var clickTime = new Date().getTime();
 
         //convert to 0-index
         taskId--;
 
-        this.updateTasks(true, taskId, clickTime, newTasks);
+        this.updateTasks("clicked", taskId, clickTime, newTasks);
     }
-
-
 
     handleSubmitButton(e){
 
@@ -137,66 +214,28 @@ class TaskManager extends Component {
             abortLabel: 'No'
         }).then((function(_this) {
             return function() {
-                self.submitTime(taskId, self.state.tasks[taskId].duration);
+                self.submitTime(taskId);
             };
         })(this));
     }
 
-    handleDeleteButton(e){
+    
 
-    }
+    parseTimes(tasks){
 
-    updateTasks(wasClicked, taskId, currTime, newTasks){
+        for(var i = 0; i < tasks.length; i++){
 
-        if(wasClicked){
-            newTasks = this.setTaskStates(taskId, newTasks);
-        }
+
+
+            tasks[i].hour = Math.floor(tasks[i].duration / 3600);
+            tasks[i].minute = Math.floor((tasks[i].duration % 3600) / 60);
         
-        newTasks = this.setTaskTimes(taskId, currTime, newTasks);
-        newTasks = this.assignColors(newTasks);
-        newTasks = this.parseTimes(newTasks);
-
-        this.setState({tasks: newTasks}, function(){
-
-            if(wasClicked){
-                this.startTimerInterval(taskId);
+            if(tasks[i].hour < 10){
+                tasks[i].hour = "0"+tasks[i].hour;
             }
-        });
-    }
 
-    setTaskTimes(taskId, currTime, tasks){
-
-        //Case 1, task was playing all ready, still playing
-        if(tasks[taskId].state === 'play' && Number.isInteger(tasks[taskId].startTime)){
-
-            //Smooth Sailing -- if there's an error at this part, do nothing.
-            if(tasks[taskId].startTime && !Number.isInteger(tasks[taskId].stopTime)){
-                tasks[taskId].stopTime = currTime;
-                tasks = this.updateTimerDuration(true, taskId, tasks);
-            }
-        }
-        //Case 2, task was just started
-        else if(tasks[taskId].state === 'play' && !Number.isInteger(tasks[taskId].startTime) && !Number.isInteger(tasks[taskId].stopTime)){
-            tasks[taskId].startTime = currTime;
-        }
-        //Case 3, task was just paused
-        else if(tasks[taskId].state === 'paused' && Number.isInteger(tasks[taskId].startTime) && !Number.isInteger(tasks[taskId].stopTime)){
-            tasks[taskId].stopTime = currTime;
-            tasks = this.updateTimerDuration(false, taskId, tasks);
-        }
-
-        return tasks;
-    }
-
-    setTaskStates(taskId, tasks){
-
-        if(tasks.length > 0){
-            if(tasks[taskId].state === 'play'){
-                tasks[taskId].state = 'paused';
-            }
-            else if(tasks[taskId].state === 'paused'){
-                tasks = this.pauseAllTasks(tasks);
-                tasks[taskId].state = 'play';
+            if(tasks[i].minute < 10){
+                tasks[i].minute = "0"+tasks[i].minute;
             }
         }
 
@@ -211,60 +250,31 @@ class TaskManager extends Component {
         return taskList;
     }
 
-    updateTimerDuration(stillPlaying, taskId, tasks){
-
-        if(tasks[taskId].startTime && tasks[taskId].stopTime){
-            
-            var difference = Math.floor((tasks[taskId].stopTime - tasks[taskId].startTime)/1000);
-            tasks[taskId].duration = parseInt(tasks[taskId].duration) + difference;
-
-            if(stillPlaying){
-                tasks[taskId].startTime = tasks[taskId].stopTime;
-                tasks[taskId].stopTime = null;
-            }
-            else{
-                tasks[taskId].startTime = null;
-                tasks[taskId].stopTime = null;
-            }
-            
-        }
-
-        return tasks;
+    postTaskUpdate(userId, taskId, title, state, duration){
+        $.ajax({
+            method: "POST",
+            url: "/api/task",
+            data: {
+                "userId":userId,
+                "taskId": taskId+1,
+                "name": title,
+                "status": state,
+                "duration": duration
+            },
+            success: self.submitSucceeded,
+            dataType: "json"
+        });
     }
 
-    startTimerInterval(taskId){
-
-        if(taskId === this.getActiveTask()){
-
-            var self = this;
-            var newTasks = self.state.tasks;
-            var currTime = new Date().getTime();
-
-            //The amount of time (in seconds) remaining until the timer should update visually
-            var updateTime = 60 - (newTasks[taskId].duration % 60);
-
-            setTimeout(function(){
-                self.updateTasks(false, taskId, currTime+(updateTime*1000), newTasks);
-                self.startTimerInterval(taskId);
-            },updateTime*1000);
-        }
+    render() {
+        return (
+            <div className="tasks-list" id="main-window">
+                <div className="add-task" onClick={(event) => {this.handleAddTaskButton(event)}}>+</div>
+                { this.renderTasks() }
+            </div>
+        );
     }
-
-    checkForActiveTasks(){
-
-        for(var i = 0; i < this.state.tasks.length; i++){
-            if(this.state.tasks[i].state === 'play'){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    submitTime(taskId, duration){
-
-        console.log('task: '+taskId+" duration: "+duration);
-    }
+    
 
     renderTasks() {
 
@@ -311,13 +321,133 @@ class TaskManager extends Component {
         }
     }
 
-    render() {
-        return (
-            <div className="tasks-list" id="main-window">
-                <div className="add-task">+</div>
-                { this.renderTasks() }
-            </div>
-        );
+    setTaskStates(taskId, tasks){
+
+        if(tasks.length > 0){
+            if(tasks[taskId].state === 'play'){
+                tasks[taskId].state = 'paused';
+            }
+            else if(tasks[taskId].state === 'paused'){
+                tasks = this.pauseAllTasks(tasks);
+                tasks[taskId].state = 'play';
+            }
+        }
+
+        return tasks;
+    }
+
+    setTaskTimes(taskId, currTime, tasks){
+
+        //Case 1, task was playing all ready, still playing
+        if(tasks[taskId].state === 'play' && Number.isInteger(tasks[taskId].startTime)){
+
+            //Smooth Sailing -- if there's an error at this part, do nothing.
+            if(tasks[taskId].startTime && !Number.isInteger(tasks[taskId].stopTime)){
+                tasks[taskId].stopTime = currTime;
+                tasks = this.updateTimerDuration(true, taskId, tasks);
+            }
+        }
+        //Case 2, task was just started
+        else if(tasks[taskId].state === 'play' && !Number.isInteger(tasks[taskId].startTime) && !Number.isInteger(tasks[taskId].stopTime)){
+            tasks[taskId].startTime = currTime;
+        }
+        //Case 3, task was just paused
+        else if(tasks[taskId].state === 'paused' && Number.isInteger(tasks[taskId].startTime) && !Number.isInteger(tasks[taskId].stopTime)){
+            tasks[taskId].stopTime = currTime;
+            tasks = this.updateTimerDuration(false, taskId, tasks);
+        }
+
+        return tasks;
+    }
+
+    startTimerInterval(taskId){
+
+        if(taskId === this.getActiveTask()){
+
+            var self = this;
+            var newTasks = self.state.tasks;
+            var currTime = new Date().getTime();
+
+            //The amount of time (in seconds) remaining until the timer should update visually
+            var updateTime = 60 - (newTasks[taskId].duration % 60);
+
+            setTimeout(function(){
+                self.updateTasks("interval", taskId, currTime+(updateTime*1000), newTasks);
+                self.startTimerInterval(taskId);
+            },updateTime*1000);
+        }
+    }
+
+    submitSucceeded(data){
+
+        //TO-DO: Implement error messaging here
+        //data should be JSON object { result: "success"};
+
+        console.log("from server");
+        console.log(data);
+
+    }
+
+    submitTime(taskId){
+
+        var self = this;
+        var curr = new Date().getTime();
+        var tasks = self.state.tasks;
+
+        if(tasks[taskId].state === "play"){
+            self.updateTasks("submitted-playing", taskId, curr, tasks);
+        }
+        else{
+            self.updateTasks("submitted-paused", taskId, curr, tasks);
+        }
+    }
+
+    updateTasks(eventName, taskId, currTime, newTasks){
+
+        var self = this;
+
+        //toggle pause/play if this was caused by clicking a button
+        if(eventName === "clicked" || eventName === "submitted-playing"){
+            newTasks = this.setTaskStates(taskId, newTasks);
+        }
+
+        if(eventName !== "submitted-paused"){
+            newTasks = this.setTaskTimes(taskId, currTime, newTasks);
+        }
+        
+        newTasks = this.assignColors(newTasks);
+        newTasks = this.parseTimes(newTasks);
+
+        self.setState({tasks: newTasks}, function(){
+
+            if(eventName === "clicked"){
+                self.startTimerInterval(taskId);
+            }
+            else if(eventName === "submitted-playing" || eventName === "submitted-paused"){
+                self.postTaskUpdate(userId, taskId, self.state.tasks[taskId].title, self.state.tasks[taskId].state, self.state.tasks[taskId].duration);
+            }
+        });
+    }
+
+    updateTimerDuration(stillPlaying, taskId, tasks){
+
+        if(tasks[taskId].startTime && tasks[taskId].stopTime){
+            
+            var difference = Math.floor((tasks[taskId].stopTime - tasks[taskId].startTime)/1000);
+            tasks[taskId].duration = parseInt(tasks[taskId].duration) + difference;
+
+            if(stillPlaying){
+                tasks[taskId].startTime = tasks[taskId].stopTime;
+                tasks[taskId].stopTime = null;
+            }
+            else{
+                tasks[taskId].startTime = null;
+                tasks[taskId].stopTime = null;
+            }
+            
+        }
+
+        return tasks;
     }
 }
 
