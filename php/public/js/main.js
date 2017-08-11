@@ -1,14 +1,10 @@
 function setMainBinds(){
-    $('#menu-button-container').on('click', openMenu);
-    $('.side-menu .nav-list .list-item').on('click', handleLinkClick);
+
+    //$('#menu-button-container').on('click', openMenu);
+    $('.header-wapper .nav-list li').on('click', handleLinkClick);
 }
 
-function checkCookie(){
-
-    if(getCookie("lastPage") !== ""){
-        loadUrl(getCookie("lastPage"));
-    }
-}
+/* LEGACY CODE
 
 function openMenu(e){
 
@@ -44,30 +40,6 @@ function closeMenu(e){
     }
 }
 
-function activateLink(){
-
-    $('.list-item').removeClass('active');
-    $('.list-item[data-url="/home"]').addClass('active');
-}
-
-function handleLinkClick(e){
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    //Prevent unnecessary loads
-    if(!$(e.target).hasClass('active')){
-        $('.side-menu .nav-list .list-item').removeClass('active');
-        $(e.target).addClass('active');
-
-        var url = $(e.target).data('url');
-
-        loadUrl(url);
-        
-    }
-    
-}
-
 function fadeLoadScreenIn(){
     $('#load').addClass('fade-in');
 }
@@ -86,7 +58,7 @@ function loadUrl(url, e){
         url: url,
         type: 'GET',
         async: true,
-        success: function (data) {
+        success: function (data) {``
             fadeLoadScreenIn();
             setTimeout(function() {
                 $('.body-content').html(data).promise().done(fadeLoadScreenOut());
@@ -96,10 +68,33 @@ function loadUrl(url, e){
 
 }
 
+*/
+
+function handleLinkClick(){
+
+
+    /*
+    //Prevent unnecessary loads
+    if(!$(e.target).hasClass('active')){
+        $('.header-wapper.nav-list li').removeClass('active');
+        $(e.target).addClass('active');
+
+        var url = $(e.target).data('url');
+
+        loadUrl(url);
+        
+    }
+
+    */
+
+    console.log('click');
+    
+}
+
+
+
 $(document).ready(function (){
 
     setMainBinds();
-    //checkCookie();
-    activateLink();
-
+    
 });

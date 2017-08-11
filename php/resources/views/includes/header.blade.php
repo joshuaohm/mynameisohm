@@ -1,9 +1,7 @@
 <div class="header-wrapper">
-	<div class="menu-button-container" id="menu-button-container">
-		<div class="menu-button">
-			<div class="top"></div>
-			<div class="middle"></div>
-			<div class="bottom"></div>
-		</div>
-	</div>
+	<ul class="nav-list">
+	<li id="home-link"><a href="/">Home</a></li>
+	<li id="my-work-link"><a href="my-work">My Work</a></li>
+	<li id="projects-link"><a href="projects">My Side Projects</a></li>
+	</ul>
 </div>

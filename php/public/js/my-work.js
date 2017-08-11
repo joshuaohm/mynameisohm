@@ -7,8 +7,9 @@ function setMyWorkBinds(){
 	$('.my-work-container .item').on('click', handleLinkClick);
 }
 
-function setPageCookie(){
-	setCookie("lastPage", 'my-work', '1');
+function activateWorkLink(){
+
+	$('#my-work-link').addClass('active');
 }
 
 (function( $ ){
@@ -107,8 +108,7 @@ function navigateLink(index){
 
 $(document).ready(function (){
 
-	//setPageCookie();
 	setMyWorkBinds();
-	activateLink();
+	activateWorkLink();
 
 });

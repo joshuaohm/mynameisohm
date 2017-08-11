@@ -1,18 +1,11 @@
 function setIndexBinds(){
-	$('.index-container .content .yellow').on('click', hitThatBurger);
+
 }
 
-function setPageCookie(){
+function activateHomeLink(){
 
-	setCookie("lastPage", 'home', '1');
-}
+	$('#home-link').addClass('active');
 
-function hitThatBurger(e){
-
-	e.preventDefault();
-    e.stopPropagation();
-    
-	$('#menu-button-container').trigger('click');
 }
 
 function rotatePassions(ids){
@@ -48,19 +41,13 @@ function rotatePassions(ids){
 	$('.passion#'+id).addClass('visible');
 }
 
-function activateLink(){
-
-	$('.list-item').removeClass('active');
-    $('.list-item[data-url="/home"]').addClass('active');
-}
-
 var interval;
 
 $(document).ready(function (){
 
 	//setPageCookie();
 	setIndexBinds();
-	activateLink();
+	activateHomeLink();
 
 	var ids = new Array();
 

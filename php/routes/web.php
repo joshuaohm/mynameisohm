@@ -21,14 +21,6 @@ Route::get('/', function () {
     return view('pages.index', ['passions' => $passions, 'links' => $links]);
 });
 
-Route::get('/home', function () {
-
-	$passions = DB::table('passions')->get();
-	$links = DB::table('links')->orderBy('id')->get();
-
-    return view('pages.home', ['passions' => $passions, 'links' => $links]);
-});
-
 Route::get('/my-work', function () {
 
 	$works = DB::table('works')->orderBy('id')->get();
@@ -46,4 +38,11 @@ Route::get('/my-work', function () {
     
 
     return view('pages.my-work', ['works' => $works, 'details' => $details, 'links' => $links])->render();
+});
+
+Route::get('/projects', function() {
+
+	$projects = DB::table('projects')->orderBy('id')->get();
+
+	return view('pages.projects', ['projects' => $projects])->render();
 });

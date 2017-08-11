@@ -21,6 +21,6 @@
 		@endforeach
 	</div>
 	<div class="content">
-		<div class="sentence-mid">Hit <span class="yellow">that</span> hamburger on the top right to learn more about me and explore my work. </div>
+		<div class="sentence-mid">Check out the links at the top to learn more about me and explore my work.</div>
 	</div>
 </div>
