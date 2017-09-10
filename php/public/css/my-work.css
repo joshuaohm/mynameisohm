@@ -2,7 +2,7 @@
 	display: block;
 	position: relative;
 	left: 50%;
-	transform: translateX(-50%);
+	transform: translateX(-50%) translateZ(0);
 }
 
 .my-work-container .headline{
@@ -104,7 +104,6 @@
 .my-work-container .details{
 	display: none;
 	opacity: 0;
-	transition: all .4s ease-in-out;
 }
 
 .my-work-container .detail{
