@@ -90,6 +90,10 @@
   
 }
 
-@media only screen and (max-width:321px){
+@media only screen and (max-width:480px){
 
+	.index-container .content .sentence-mid{
+		font-size: 14px;
+		font-weight: normal;
+	}
 }

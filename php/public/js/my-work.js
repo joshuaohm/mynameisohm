@@ -1,10 +1,12 @@
+function activateWorkLeft(next){
 
-function setMyWorkBinds(){
+	$('#img-'+next+" img").addClass('active');
+	$('#details-'+next).addClass('active');
+}
 
-	$('.my-work-container .item').on('mouseenter touchstart', handleMenuFadeIn);
-	$('.my-work-container .item').on('mouseleave', fadeMenuOut);
-	
-	$('.my-work-container .item').on('click', handleLinkClick);
+function activateWorkRight(next){
+	$('#img-'+next+" img").addClass('active-prev');
+	$('#details-'+next).addClass('active');
 }
 
 function activateWorkLink(){
@@ -12,98 +14,78 @@ function activateWorkLink(){
 	$('#my-work-link').addClass('active');
 }
 
-(function( $ ){
+function deactivateWork(){
 
-	$.fn.filterItemIndex = function(index) {
-
-		return this.filter("[data-index='"+index+"']");
-	};
-
-}( jQuery ));
-
-function getIndex(e){
-
-	var index = $(e.target).data('index');
-
-	if(typeof(index) === "undefined"){
-		index = $(e.target).parent().data('index');
-	}
-
-	return index;
+	$('.my-work-container .top img').removeClass('active');
+	$('.my-work-container .top img').removeClass('active-prev');
+	$('.my-work-container .bottom .details').removeClass('active');
 }
 
-function checkIsSmall(index){
-	var conditional = $('.my-work-container .row-wrapper .small').filterItemIndex(index).css('display');
-	if(conditional == 'block' || conditional == 'inline-block'){
-		return true;
+function determineNextSlide(active, next, count){
+
+	//determine which slide to transition to
+	console.log(active+" "+next+" "+count);
+
+	if(active == 0 && next == -1){
+		next = +count - 1;
+	}
+	else if (active == parseInt(count - 1) && next == 1){
+		next = 0;
 	}
 	else{
-		return false;
+		next = +active + +next;
 	}
+
+	return next;
 }
 
-function handleLinkClick(e){
+function getActiveIndex(){
+
+	var id = $('.my-work-container .bottom .active').attr('id');
+
+	return id.split('-')[1];
+
+}
+
+function getItemCount(){
+
+	return $('.my-work-container .top img').length;
+}
+
+function handleButtonClick(e){
 
 	e.preventDefault();
 	e.stopPropagation();
 
-	var index = getIndex(e);
-	navigateLink(index);
-}
+	var inc = 0;
 
-
-function handleMenuFadeIn(e){
-
-	e.preventDefault();
-	e.stopPropagation();
-
-	var index = getIndex(e);
-	var isSmall = checkIsSmall(index);
-	var selector = "";
-
-	//determine which set of items to interact with
-	if(isSmall){
-		selector = ".my-work-container .row-wrapper .small > .details";
+	if($(e.target).hasClass('left')){
+		inc = -1;
 	}
-	else{
-		selector = ".my-work-container .row-wrapper .big > .details";
+	else if($(e.target).hasClass('right')){
+		inc = 1;
 	}
 
-	//If a Mobile interaction
-	if(e.originalEvent.type === 'touchstart' ){
+	var active = getActiveIndex();
+	count = getItemCount();
 
-		//Already visible, treat like a click
-		if($(selector).filterItemIndex(index).hasClass('fade-in')){
-			navigateLink(index);
-		}
-		//Make details visible
-		else{
-			$('.my-work-container .item > .details').removeClass('fade-in').promise().done(fadeMenuIn(selector, index));
-		}
+	next = determineNextSlide(active, inc, count);
+
+	console.log(next);
+
+	deactivateWork();
+
+	if(inc == 1){
+		activateWorkLeft(next);
 	}
-	else if(e.originalEvent.type === 'mouseover'){
-		$('.my-work-container .item > .details').removeClass('fade-in').promise().done(fadeMenuIn(selector,index));
+	else if(inc == -1){
+		activateWorkRight(next);
 	}
 }
 
-function fadeMenuIn(selector, index){
-	$(selector).filterItemIndex(index).addClass('fade-in');
-}
+function setMyWorkBinds(){
 
-function fadeMenuOut(){
-	$('.my-work-container .details').removeClass('fade-in');	
-}
-
-function activateLink(){
-
-	$('.list-item').removeClass('active');
-    $('.list-item[data-url="/my-work"]').addClass('active');
-}
-
-function navigateLink(index){
-
-	var url = $('.item').filterItemIndex(index).children('a').attr('href');
-	window.open(url, '_blank');
+	$('.my-work-container .top .btn').on('click', handleButtonClick);
 }
 
 $(document).ready(function (){

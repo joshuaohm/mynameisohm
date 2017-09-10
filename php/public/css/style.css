@@ -31,6 +31,9 @@ body, html{
   height: 120px;
   font-family: 'Roboto Condensed';
   color: white;
+  font-size: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .header-wrapper{
@@ -42,24 +45,26 @@ body, html{
   list-style:none;
   padding: 0px;
   margin: 0px;
+  font-size: 0;
 }
 
 .header-wrapper ul li{
-  width: 33%;
+  margin: 0;
+  width: calc(100% / 3);
   line-height: 60px;
   display: inline-block;
   text-align: center;
   color: white;
+  font-size: 18px;
   border-bottom: none;
   opacity: 1;
   transition: all .6s;
-  border-bottom: 0px solid transparent;
+  border-bottom: 2px solid white;
 }
 
 .header-wrapper ul .active{
-  color: #3e2a14;
-  font-weight: bold;
-  border-bottom: 2px solid #3e2a14;
+  color: white;
+  border-bottom: 2px solid #9f6934;
 }
 
 .header-wrapper ul a:hover{
@@ -172,7 +177,7 @@ body, html{
 @media only screen and (min-width: 481px) and (max-width: 768px){
 
   .header-wrapper ul li{
-    width: calc(33% - 2px);
+    font-size: 14px;
   }
 
   .container{
@@ -187,7 +192,7 @@ body, html{
 @media only screen and (max-width: 480px){
 
   .header-wrapper ul li{
-    width: calc(33% - 2px);
+    font-size: 14px;
   }
 
   .container{

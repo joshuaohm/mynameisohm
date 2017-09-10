@@ -14,9 +14,16 @@
 					<img class="big" src='{{ asset("img/".$project->name."-big.jpg") }}' data-index="{{ ($index) }}"></img>
 				</a>
 			</div>
-			<div class="details">{{ $project->details }}</div>
-			<a class="repo" href='{{ $project->repo }}'>{{ $project->title }}'s source can be found here </a>
+			<div class="details-wrapper">
+				<div class="details">{{ $project->details }}</div>
 
+				<div class="btns-row">
+					<div class="btns-wrapper">
+						<a class="btn link" href="{{ $project->url }}">View App</a>
+						<a class="btn repo" href='{{ $project->repo }}'>View Source</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	
 	@endforeach
