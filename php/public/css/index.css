@@ -71,9 +71,14 @@
 	width: 50%;
 }
 
+.index-container .social-wrapper i:hover, .index-container .social-wrapper i:active{
+	color: #3e2a14;
+}
+
 .index-container .social-wrapper i{
 	font-size: 36px;
 	color: white;
+	transition: all .2s ease-in-out;
 }
 
 

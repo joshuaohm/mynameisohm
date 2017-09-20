@@ -70,6 +70,11 @@
 	transform: translateX(-50%);
 }
 
+.my-projects-container .project-holder .btn:hover, .my-projects-container .project-holder .btn:active {
+	background-color: #9f6934;
+	border: 2px solid #3e2a14;
+}
+
 .my-projects-container .project-holder .btn{
 	display: inline-block;
 	text-decoration: none;
@@ -80,6 +85,7 @@
 	position: relative;
 	margin-right: 10px;
 	font-size: 18px;
+	transition: all .2s ease-in-out;
 }
 
 @media only screen and (max-width: 1024px) and (min-width: 481px){
