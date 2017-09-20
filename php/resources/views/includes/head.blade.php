@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/css/normalize.css">
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/fontello.css">
 <link rel="stylesheet" href="/css/side-menu.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">

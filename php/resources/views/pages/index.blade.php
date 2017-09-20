@@ -22,8 +22,19 @@
 			@endif
 		@endforeach
 	</div>
-	<div class="content">
-		<div class="sentence-mid">Check out the links at the top to learn more about me and explore my work.</div>
+	<div class="content large-margin-bottom">
+		<div class="sentence-mid">Check out the links above to explore my work.</div>
+	</div>
+	<div class="content social-content">
+		<div class="sentence-mid large-margin-bottom">You can also learn more about me at my social links below:</div>
+		<div class="social-container">
+			<div class="social-wrapper">
+				<a href="https://www.linkedin.com/in/joshuaohm/"><i class="icon-linkedin-squared"></i></a>
+			</div>
+			<div class="social-wrapper">
+				<a href="https://www.github.com/joshuaohm"><i class="icon-github-squared"></i></a>
+			</div>
+		</div>
 	</div>
 </div>
 @stop

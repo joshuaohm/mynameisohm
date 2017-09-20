@@ -42,12 +42,12 @@
 	text-align: center;
 }
 
-.index-container .content .sentence-mid{
+.index-container .sentence-mid{
 	font-size: 24px;
 	display: inline-block;
 	font-weight: bold;
 	text-align: center;
-
+	color: white;
 }
 
 .index-container .content .passion, .index-container .content .period{
@@ -57,6 +57,24 @@
 .index-container .content .passion {
 	display:none;
 }
+
+.index-container .social-container{
+	display: inline-block;
+	width: 100%;
+	font-size: 0px;
+}
+
+.index-container .social-wrapper{
+	display: inline-block;
+	width: 50%;
+}
+
+.index-container .social-wrapper i{
+	font-size: 36px;
+	color: white;
+}
+
+
 
 .index-container .content .visible{
 	display:inline-block;
@@ -72,9 +90,13 @@
 
 @media only screen and (max-width:481px){
 
-	.index-container{
+  .index-container{
 		min-height: 100%;
-	}
+  }
+
+  .index-container .large-margin-bottom{
+  	margin-bottom: 20px;
+  }
 
   .index-container .content{
     margin-bottom: 30px;
