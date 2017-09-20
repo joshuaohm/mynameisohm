@@ -48,6 +48,7 @@
 	font-weight: bold;
 	text-align: center;
 	color: white;
+	width: 100%;
 }
 
 .index-container .content .passion, .index-container .content .period{
@@ -60,11 +61,12 @@
 
 .index-container .social-container{
 	display: inline-block;
-	width: 100%;
+	width: 50%;
 	font-size: 0px;
 }
 
 .index-container .social-wrapper{
+	position: relative;
 	display: inline-block;
 	width: 50%;
 }
