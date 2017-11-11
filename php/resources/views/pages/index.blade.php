@@ -3,6 +3,8 @@
 {{ Html::script('js/index.js') }}
 {{ Html::style('css/index.css') }}
 <div class="index-container">
+
+	<svg id="svg-animation"></svg>
 	<div class="content">
 		<div class="sentence block">Hi, My name is Joshua Ohm</div>
 

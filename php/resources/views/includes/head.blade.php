@@ -16,3 +16,4 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
 <script src="/js/main.js"></script>
+<script src="/js/snap.svg-min.js"></script>
