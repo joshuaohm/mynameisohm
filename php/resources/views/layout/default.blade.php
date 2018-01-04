@@ -5,15 +5,11 @@
 </head>
 <body>
 
-<div class="container mid" id="container">
-    <header class="header">
+<div class="main-wrapper mid" id="container">
+    <header>
         @include('includes.header')
     </header>
-    <div id="main" class="main-body">
-        <div class="body-content">
-            @yield('content')
-        </div>
-    </div>
+    @yield('content')
 </div>
 </body>
 </html>

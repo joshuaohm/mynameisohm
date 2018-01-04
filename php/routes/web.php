@@ -44,5 +44,5 @@ Route::get('/experiments', function() {
 
 	$projects = DB::table('projects')->orderBy('id')->get();
 
-	return view('pages.experiments', ['experiments' => $projects])->render();
+	return view('pages.projects', ['projects' => $projects])->render();
 });

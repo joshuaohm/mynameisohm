@@ -4,16 +4,12 @@
 <title> My Name Is Ohm</title>
 
 <!-- load resources here -->
-<link rel="stylesheet" href="/css/normalize.css">
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/fonts.css">
-<link rel="stylesheet" href="/css/fontello.css">
-<link rel="stylesheet" href="/css/side-menu.css">
-<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/fontello.css">
+<link href="https://fonts.googleapis.com/css?family=Audiowide|Monoton|Press+Start+2P" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
-<script src="/js/main.js"></script>
 <script src="/js/snap.svg-min.js"></script>
