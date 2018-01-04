@@ -16,10 +16,12 @@
                     	@if ($index == 0)
                     		<div class="source active" id="img-{{ $index }}" 
                     		style="background-image: url({{ asset('img/'.$project->name.'.jpg') }} )">
+                                <a href="{{ $project->url }}"></a>
                     		</div>
                     	@else
                     		<div class="source" id="img-{{ $index }}" 
                     		style="background-image: url({{ asset('img/'.$project->name.'.jpg') }} )">
+                                <a href="{{ $project->url }}"></a>
                     		</div>
                     	@endif
                     @endforeach
@@ -62,12 +64,18 @@
             			<div class="title">{{ $project->title }}</div>
             			<div class="detail">{{ $project->details }}</div>
             			<div class="btns-wrapper">
-            				<div class="btn-wrapper">
-								<a class="btn link" href="{{ $project->url }}">View App</a>
-							</div>
-							<div class="btn-wrapper">
-								<a class="btn link" id="source-link" href='{{ $project->repo }}'>View Source</a>
-							</div>
+                            @if($project->url === $project->repo)
+                                <div class="btn-wrapper">
+                                    <a class="btn link" href='{{ $project->repo }}'>View Source</a>
+                                </div>
+                            @else
+                                <div class="btn-wrapper">
+                                    <a class="btn link" href="{{ $project->url }}">View App</a>
+                                </div>
+    							<div class="btn-wrapper">
+    								<a class="btn link" id="source-link" href='{{ $project->repo }}'>View Source</a>
+    							</div>
+                            @endif
 						</div>
             		</div>
             	@endif

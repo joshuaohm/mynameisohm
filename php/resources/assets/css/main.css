@@ -417,6 +417,15 @@
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover; }
+    .my-work-container .top .image .source a {
+      outline: none;
+      text-decoration: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2; }
   .my-work-container .top .image .source.active {
     display: inline-block;
     position: relative;
@@ -746,6 +755,15 @@
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover; }
+    .experiments-container .top .image .source a {
+      outline: none;
+      text-decoration: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2; }
   .experiments-container .top .image .source.active {
     display: inline-block;
     position: relative;

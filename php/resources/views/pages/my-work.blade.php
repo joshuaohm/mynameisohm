@@ -16,10 +16,12 @@
                     	@if ($index == 0)
                     		<div class="source active" id="img-{{ $index }}" 
                     		style="background-image: url({{ asset('img/'.$work->name.'.jpg') }} )">
+                                <a href='{{ $work->url }}'></a>
                     		</div>
                     	@else
                     		<div class="source" id="img-{{ $index }}" 
                     		style="background-image: url({{ asset('img/'.$work->name.'.jpg') }} )">
+                                <a href='{{ $work->url }}'></a>
                     		</div>
                     	@endif
                     @endforeach
