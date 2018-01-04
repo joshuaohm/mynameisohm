@@ -40,9 +40,9 @@ Route::get('/my-work', function () {
     return view('pages.my-work', ['works' => $works, 'details' => $details, 'links' => $links])->render();
 });
 
-Route::get('/projects', function() {
+Route::get('/experiments', function() {
 
 	$projects = DB::table('projects')->orderBy('id')->get();
 
-	return view('pages.projects', ['projects' => $projects])->render();
+	return view('pages.experiments', ['experiments' => $projects])->render();
 });
