@@ -12,13 +12,7 @@
       </h3>
     </div>
     <div class="right">
-      <div class="globe-wrapper">
-        <div class="globe">
-          <div class="mid"></div>
-          <div class="top two"></div>
-          <div class="bottom two"></div>
-        </div>
-      </div>
+      <canvas id="sphere3d" width="200" height="200" />
     </div>
   </div>
 </div>
