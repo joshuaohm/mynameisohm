@@ -12,17 +12,14 @@ class PassionsTableSeeder extends Seeder
     public function run()
     {
 
-        $passions = array("PHP","CSS","HTML","JavaScript","Java","C#","C","Mobile","Space Exploration","Science","Music","Humanity","WebVR","Animals","Languages","History","Android","Video Games","Astronomy");
+        $passions = array("PHP", "CSS", "HTML", "JavaScript", "Java", "C#", "C", "Mobile", "Space Exploration", "Science", "Music", "Humanity", "WebVR", "Animals", "Languages", "History", "Android", "Video Games", "Astronomy");
 
-        foreach($passions as $index => $passion){
-
+        foreach ($passions as $index => $passion) {
         }
 
         DB::table('passions')->insert([
-            'id' => $index+1,
-            'value' => $passion 
+            'id' => $index + 1,
+            'value' => $passion
         ]);
-
     }
 }
-

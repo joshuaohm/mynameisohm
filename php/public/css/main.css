@@ -57,7 +57,7 @@
     height: 40px;
     text-align: center;
     line-height: 40px;
-    font-family: "Monoton", cursive;
+    font-family: 'Bungee Inline', cursive;
     text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 5px #1a8996, 0 0 20px #1a8996, 0 0 30px #1a8996, 0 0 40px #1a8996, 0 0 55px #1a8996; }
   .items .one {
     animation: flicker 10s infinite;
@@ -76,9 +76,6 @@
   transition: none;
   opacity: 1; }
 
-@media screen and (max-width: 769px) and (min-width: 481px) {
-  .items .item {
-    font-size: 16px; } }
 
 @media screen and (max-width: 480px) and (min-width: 321px) {
   .items {
@@ -534,8 +531,8 @@
   opacity: 0; }
 
 .my-work-container .detail {
-  font-size: 14px;
-  font-family: "Press Start 2P", cursive;
+  font-size: 18px;
+  font-family: 'Lekton', sans-serif;
   color: #c06213;
   margin-bottom: 16px;
   text-align: center;
@@ -626,8 +623,7 @@
     width: 100%; }
   .my-work-container .detail {
     padding-left: 16px;
-    padding-right: 16px;
-    font-size: 10px; }
+    padding-right: 16px;}
   .my-work-container .details .btn {
     font-size: 10px; } }
 
@@ -684,7 +680,6 @@
   padding-right: 50px; }
 
 .experiments-container .headline {
-  font-family: "Audiowide", cursive;
   font-size: 24px;
   color: white;
   text-align: center;
@@ -692,7 +687,6 @@
   -webkit-font-smoothing: antialiased; }
 
 .experiments-container .mobile-headline {
-  font-family: "Audiowide", cursive;
   font-size: 16px;
   color: white;
   text-align: center;
@@ -872,15 +866,17 @@
   opacity: 0; }
 
 .experiments-container .details .title {
-  font-size: 14px;
-  font-family: "Press Start 2P", cursive;
+  font-size: 18px;
+  font-weight: 800;
+  font-style: bold;
+  font-family: 'Lekton', sans-serif;
   color: #c06213;
   margin-bottom: 28px;
   text-align: center; }
 
 .experiments-container .detail {
-  font-size: 14px;
-  font-family: "Press Start 2P", cursive;
+  font-size: 16px;
+  font-family: 'Lekton', sans-serif;
   color: #c06213;
   text-align: center;
   margin-bottom: 16px;
@@ -987,8 +983,7 @@
     width: 100%; }
   .experiments-container .detail {
     padding-left: 16px;
-    padding-right: 16px;
-    font-size: 10px; }
+    padding-right: 16px; }
   .experiments-container .details .btn {
     font-size: 10px; } }
 
